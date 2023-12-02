@@ -37,7 +37,7 @@ def post_photo():
         target_image.save(os.path.join('.', target_filename))
 
         # Run your processing script here
-        os.system(f"python run.py --target {target_filename} --source {source_filename} -o images/{client_id}.png --execution-provider cpu")
+        os.system(f"python3 run.py --target {target_filename} --source {source_filename} -o images/{client_id}.png --execution-provider cpu")
 
         processed_filename = f"{client_id}.png"
         processed_url = f"{request.url_root}get/{client_id}.png"
