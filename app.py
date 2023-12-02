@@ -41,10 +41,10 @@ def post_photo():
         os.system(f"python3 run.py --target {target_filename} --source {source_filename} -o images/{client_id}.png --execution-provider cpu")
         image = Image.open(f"images/{client_id}.png")
         model = EdsrModel.from_pretrained('eugenesiow/edsr-base', scale=2)
-        inputs = ImageLoader.load_image(image)
-        preds = model(inputs)
-        ImageLoader.save_image(preds, f'images/{client_id}.png')
-        processed_filename = f"{client_id}.png"
+        #inputs = ImageLoader.load_image(image)
+        #preds = model(inputs)
+        #ImageLoader.save_image(preds, f'images/{client_id}.png')
+        #processed_filename = f"{client_id}.png"
         processed_url = f"{request.url_root}get/{client_id}.png"
 
         return jsonify({'processed_url': processed_url})
