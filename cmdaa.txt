@@ -1,0 +1,1 @@
+python run.py --target tariq.jpg --source zain.jpg -o output.jpg --execution-provider cpu --frame-processor face_swapper face_enhancer
