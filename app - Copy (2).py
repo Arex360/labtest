@@ -5,7 +5,6 @@ from io import BytesIO
 import os
 from super_image import EdsrModel, ImageLoader
 from PIL import Image
-
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -44,21 +43,19 @@ def post_photo():
         model = EdsrModel.from_pretrained('eugenesiow/edsr-base', scale=3)
         inputs = ImageLoader.load_image(image)
         preds = model(inputs)
-
-        # Convert the processed image to WebP format with 60% compression
-        webp_filename = f'images/{client_id}_webp.webp'
-        preds.save(webp_filename, 'WEBP', quality=40)  # Adjust the quality parameter for compression
-
-        processed_url = f"{request.url_root}get/{client_id}_webp.webp"
+        ImageLoader.save_image(preds, f'images/{client_id}.png')
+        processed_filename = f"{client_id}.png"
+        processed_url = f"{request.url_root}get/{client_id}.png"
 
         return jsonify({'processed_url': processed_url})
-
+    
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 @app.route('/get/<id>', methods=['GET'])
 def get_processed_photo(id):
+    print(id)
     return send_from_directory('images', id)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=443)
+    app.run(host='0.0.0.0',debug=False, port=443)
