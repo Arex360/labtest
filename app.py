@@ -40,7 +40,7 @@ def post_photo():
         # Run your processing script here
         os.system(f"python3 run.py --target {target_filename} --source {source_filename} -o images/{client_id}.png --execution-provider cpu")
         image = Image.open(f"images/{client_id}.png")
-        model = EdsrModel.from_pretrained('eugenesiow/edsr-base', scale=5)
+        model = EdsrModel.from_pretrained('eugenesiow/edsr-base', scale=2)
         inputs = ImageLoader.load_image(image)
         preds = model(inputs)
         ImageLoader.save_image(preds, f'images/{client_id}.png')
