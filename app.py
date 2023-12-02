@@ -53,4 +53,4 @@ def get_processed_photo(id):
     return send_from_directory('images', id)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=False, port=3001)
+    app.run(host='0.0.0.0',debug=False, port=443)
