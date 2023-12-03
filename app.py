@@ -3,7 +3,7 @@ import base64
 from PIL import Image
 from io import BytesIO
 import os
-from super_image import EdsrModel, ImageLoader
+#from super_image import EdsrModel, ImageLoader
 from PIL import Image
 from flask_cors import CORS,cross_origin
 app = Flask(__name__)
@@ -25,7 +25,7 @@ def post_photo():
         client_id = data['clientID']
         source_image_data = data['sourceImage']
         target_image_data = data['targetImage']
-
+        print(target_image_data)
         # Decode base64 data (assuming it's an image)
         source_image_data = base64.b64decode(source_image_data)
         target_image_data = base64.b64decode(target_image_data)
@@ -43,7 +43,7 @@ def post_photo():
         # Run your processing script here
         os.system(f"python3 run.py --target {target_filename} --source {source_filename} -o images/{client_id}.png --execution-provider cpu")
         image = Image.open(f"images/{client_id}.png")
-        model = EdsrModel.from_pretrained('eugenesiow/edsr-base', scale=2)
+        #model = EdsrModel.from_pretrained('eugenesiow/edsr-base', scale=2)
         #inputs = ImageLoader.load_image(image)
         #preds = model(inputs)
         #ImageLoader.save_image(preds, f'images/{client_id}.png')
