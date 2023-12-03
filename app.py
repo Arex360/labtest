@@ -5,7 +5,9 @@ from io import BytesIO
 import os
 from super_image import EdsrModel, ImageLoader
 from PIL import Image
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
