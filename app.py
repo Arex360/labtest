@@ -5,11 +5,14 @@ from io import BytesIO
 import os
 from super_image import EdsrModel, ImageLoader
 from PIL import Image
+from flask_cors import CORS,cross_origin
 app = Flask(__name__)
+CORS(app, support_credentials=False)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/postPhoto', methods=['POST'])
+@cross_origin(supports_credentials=False)
 def post_photo():
     try:
         data = request.get_json()
