@@ -25,7 +25,6 @@ def post_photo():
         client_id = data['clientID']
         source_image_data = data['sourceImage']
         target_image_data = data['targetImage']
-        print(target_image_data)
         # Decode base64 data (assuming it's an image)
         source_image_data = base64.b64decode(source_image_data)
         target_image_data = base64.b64decode(target_image_data)
