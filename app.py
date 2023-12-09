@@ -67,10 +67,6 @@ def post_photo():
 @app.route('/get/<id>', methods=['GET'])
 def get_processed_photo(id):
     print(id)
-    file_path = os.path.join('images', id)
-    
-    # Schedule the file deletion after 3 minutes
-    file_cleanup_scheduler.enter(60, 1, delete_file, (file_path,))
     return send_from_directory('images', id)
 @app.route('/del/<id>', methods=['GET'])
 def get_processed_photo(id):
