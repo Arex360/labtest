@@ -59,7 +59,7 @@ def post_photo():
         os.remove(target_filename)
         processed_url = f"{request.url_root}get/{client_id}.png"
 
-        return jsonify({'processed_url': processed_url,'temp':client_id})
+        return jsonify({'processed_url': processed_url})
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -68,8 +68,9 @@ def post_photo():
 def get_processed_photo(id):
     print(id)
     return send_from_directory('images', id)
+
 @app.route('/del/<id>', methods=['GET'])
-def get_processed_photo(id):
+def get_del_photo(id):
     print(id)
     file_path = os.path.join('images', id)
     os.remove(file_path)
