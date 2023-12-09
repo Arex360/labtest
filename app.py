@@ -59,7 +59,7 @@ def post_photo():
         os.remove(target_filename)
         processed_url = f"{request.url_root}get/{client_id}.png"
 
-        return jsonify({'processed_url': processed_url})
+        return jsonify({'processed_url': processed_url,'temp':client_id})
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
