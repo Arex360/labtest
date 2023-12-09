@@ -6,11 +6,19 @@ import os
 #from super_image import EdsrModel, ImageLoader
 from PIL import Image
 from flask_cors import CORS,cross_origin
+import sched
+import time
+file_cleanup_scheduler = sched.scheduler(time.time, time.sleep)
 app = Flask(__name__)
 CORS(app, support_credentials=False)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+def delete_file(file_path):
+    try:
+        os.remove(file_path)
+        print(f"File '{file_path}' deleted successfully.")
+    except OSError as e:
+        print(f"Error deleting file '{file_path}': {e}")
 @app.route('/postPhoto', methods=['POST'])
 @cross_origin(supports_credentials=False)
 def post_photo():
@@ -47,6 +55,8 @@ def post_photo():
         #preds = model(inputs)
         #ImageLoader.save_image(preds, f'images/{client_id}.png')
         #processed_filename = f"{client_id}.png"
+        os.remove(source_filename)
+        os.remove(target_filename)
         processed_url = f"{request.url_root}get/{client_id}.png"
 
         return jsonify({'processed_url': processed_url})
@@ -57,6 +67,10 @@ def post_photo():
 @app.route('/get/<id>', methods=['GET'])
 def get_processed_photo(id):
     print(id)
+    file_path = os.path.join('images', id)
+    
+    # Schedule the file deletion after 3 minutes
+    file_cleanup_scheduler.enter(60, 1, delete_file, (file_path,))
     return send_from_directory('images', id)
 
 if __name__ == '__main__':
