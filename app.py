@@ -72,6 +72,12 @@ def get_processed_photo(id):
     # Schedule the file deletion after 3 minutes
     file_cleanup_scheduler.enter(60, 1, delete_file, (file_path,))
     return send_from_directory('images', id)
+@app.route('/del/<id>', methods=['GET'])
+def get_processed_photo(id):
+    print(id)
+    file_path = os.path.join('images', id)
+    os.remove(file_path)
+    return jsonify({'status': "ok"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=False, port=443)
